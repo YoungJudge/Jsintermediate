@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回到顶部</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    ul{list-style-type: none;}
+    li{float:left;}
+    div:nth-child(1){background:palevioletred;width:100%;height:400px;font-size:60px;text-align:center;line-height:400px;}
+    div:nth-child(2){background:blue;width:100%;height:700px;font-size:60px;text-align:center;line-height:700px;}
+    div:nth-child(3){background:greenyellow;width:100%;height:800px;font-size:60px;text-align:center;line-height:800px;}
+    div:nth-child(4){background:orange;width:100%;height:900px;font-size:60px;text-align:center;line-height:900px;}
+    div:nth-child(5){background:palegreen;width:100%;height:500px;font-size:60px;text-align:center;line-height:500px;}
+    div:nth-child(6){background:blueviolet;width:100%;height:600px;font-size:60px;text-align:center;line-height:600px;}
+    div:nth-child(7){background:tomato;width:100%;height:1000px;font-size:60px;text-align:center;line-height:400px;}
+    #nav{width:150px;height:50px;background:black;position:fixed;right:0px;bottom:0px;}
+    #nav li{width:100%;height:49px;border-bottom:1px solid white;color:white;text-align:center;line-height:49px;}
+</style>
+<body>
+<div id="content">
+<div>第一部分</div>
+<div>第二部分</div>
+<div>第三部分</div>
+<div>第四部分</div>
+<div>第五部分</div>
+<div>第六部分</div>
+<div>第七部分</div>
+</div>
+<ul id="nav">
+
+    <li>第七部分</li>
+    <li>第六部分</li>
+    <li>第五部分</li>
+    <li>第四部分</li>
+    <li>第三部分</li>
+    <li>第二部分</li>
+    <li>回到顶部</li>
+</ul>
+</body>
+<script>
+    var Content = document.getElementById("content");
+    var Contentli_length = Content.children.length;
+    var nav = document.getElementById("nav");
+    var navli_length = nav.children.length;
+   for(var i=0;i<navli_length-1;i++)
+   {
+       nav.children[i].style["display"] = "none";
+   }
+   window.onscroll = function(){
+       var top = Content.children[0].offsetHeight;
+       clearInterval(timer);
+       var timer = setInterval(function(){
+           var ScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+           if(ScrollTop>top)
+           {
+               for(var i=0;i<navli_length-1;i++)
+               {
+                   nav.children[i].style["display"] = "block";
+               }
+               nav.style["height"] = "350px";
+               for(var m=0;m<navli_length;m++)
+               {
+                   nav.children[m].index = m;
+                   nav.children[m].onclick = function(){
+                       var index = this.index;
+                       Scroll(Content.children[navli_length-1-index],200);
+                   }
+               }
+           }else
+           {
+               for(var i=0;i<navli_length-1;i++)
+               {
+                   nav.children[i].style["display"] = "none";
+               }
+               nav.style["height"] = "50px";
+           }
+
+       },100)
+   }
+   /*滚动函数开始*/
+    function Scroll(obj,step,endfn)
+    {
+        clearInterval(timer);
+        var ScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var target = obj.offsetTop;
+        step = target>ScrollTop?step:-step;
+        var timer = setInterval(function(){
+            var ScrollTopNew = document.documentElement.scrollTop || document.body.scrollTop;
+            var speed = ScrollTopNew+step;
+            if(speed>target&&step>0||speed<target&&step<0)
+            {
+                speed = target;
+            }
+            document.documentElement.scrollTop = speed;
+            document.body.scrollTop = speed;
+            if(speed==target)
+            {
+                clearInterval(timer);
+                endfn&&endfn();
+            }
+        },100)
+    }
+   /*滚动函数结束*/
+
+</script>
+</html>

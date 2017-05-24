@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BOM浏览器机制</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    .box{width:100px;height:50px;position:absolute;background: red;color:yellow;overflow:hidden;}
+</style>
+<body>
+<div class="box">
+
+</div>
+</body>
+<script>
+var a = document.getElementsByClassName("box")[0];
+    document.onmousemove = function(e){
+        var scrollTop = document.body.scrollTop|| document.documentElement.scrollTop;
+        a.style["left"] = (e.clientX-50)+"px";
+        a.style["top"] = (e.clientY-25+scrollTop)+"px";
+    }
+</script>
+</html>

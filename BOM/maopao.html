@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件冒泡解释</title>
+</head>
+<body>
+<style>
+    *{margin:0px;padding:0px;}
+    .div1{background:red;width:400px;height:400px;margin:0 auto;}
+    .div2{background:blue;width:200px;height:200px;margin:0 auto;}
+</style>
+<div class="div1">
+<div class="div2">
+    测试冒泡
+</div>
+</div>
+</body>
+<script>
+    document.getElementsByClassName("div1")[0].onclick = function(){
+        window.alert("弹出最外层");
+    }
+    document.getElementsByClassName("div2")[0].onclick = function(e){
+        e.cancelBubble = true;
+        window.alert("弹出最内层");
+    }
+</script>
+</html>

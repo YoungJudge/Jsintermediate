@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>自定义滚动条</title>
+
+</head>
+<body>
+<style>
+    *{margin:0px;padding:0px;}
+    #scrollbar{width:30px;height:400px;border:2px solid #ccc;position:absolute;left:30px;top:100px;}
+    #scrolltop{width:30px;height:30px;background:black;position:absolute;left:0px;top:0px;}
+    #content{width:700px;height:400px;position:absolute;left:90px;top:100px;border:1px solid #ccc;overflow:hidden;}
+    #neirong{position:absolute;left:0px;top:0px;font-size:24px;}
+</style>
+<!--滚动条开始-->
+<div id="scrollbar">
+    <div id="scrolltop"></div>
+</div>
+<!--滚动条结束-->
+<!--内容开始-->
+<div id="content">
+<div id="neirong">
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+    今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好今天天气好
+
+
+</div>
+</div>
+<!--内容结束-->
+<script>
+    document.getElementById("scrolltop").onmousedown = function(e){
+        e = e ||event;
+        var dis = e.clientY;
+        var first = dis - document.getElementById("scrolltop").offsetTop;
+       document.onmousemove = function(e){
+           e = e ||event;
+            var T = e.clientY - first;
+            if(T<=0)
+            {
+                T =0 ;
+            }else if(T>=document.getElementById("scrollbar").offsetHeight-document.getElementById("scrolltop").offsetHeight)
+            {
+                T = document.getElementById("scrollbar").offsetHeight-document.getElementById("scrolltop").offsetHeight;
+            }
+           document.getElementById("scrolltop").style["top"] = T+"px";
+           var percent = T/(document.getElementById("scrollbar").offsetHeight-document.getElementById("scrolltop").offsetHeight);
+           var content_top = (document.getElementById("neirong").scrollHeight - document.getElementById("scrollbar").offsetHeight)*percent;
+           document.getElementById("neirong").style["top"] = -content_top+"px";
+        }
+        document.onmouseup = function(){
+            document.onmousemove = null;
+        }
+
+    }
+
+
+</script>
+</body>
+</html>

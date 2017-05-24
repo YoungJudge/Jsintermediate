@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>天津华北医院优惠幅度真大，我们都喜欢天津华北医院</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    ul{list-style-type:none;}
+    .on{background:red;}
+    #ul1{width:200px;height:auto;}
+    #ul1 li{width:100%;height:50px;line-height:50px;border-bottom:1px solid #ccc;float:left;}
+
+</style>
+<body>
+<ul id="ul1">
+    <li><a href="">第一个li</a></li>
+    <li class="abc on ccc on cbd"><a href="">第二个li</a></li>
+    <li><a href="">第三个li</a></li>
+    <li class="on"><a href="">第四个li</a></li>
+    <li class="bgf"><a href="">第五个lii</a></li>
+</ul>
+</body>
+<script>
+    var liall = document.getElementsByTagName("li");
+    for(var i=0;i<liall.length;i++)
+    {
+        //addClassName(liall[i],"on");
+        removeClassName(liall[i],"on");
+    }
+    /*添加类*/
+    function addClassName(obj,className2)
+    {
+        if(obj.className=="")
+        {
+            obj.className="on";
+        }else
+        {
+            var Name = obj.getAttribute("class");
+            var arr = Name.split(" ");
+            var flag = false; //开关
+            for(var i=0;i<arr.length;i++)
+            {
+                if(arr[i]==className2)         //当数组里面这个元素要是找到了证明他的存在，所以就没必要添加了
+                {
+                    flag = true;
+                }
+            }
+            if(!flag)        //表示全部都没找到
+            {
+                obj.className +=" "+className2;
+            }
+        }
+    }
+    /*添加类结束*/
+    /*移除class类名*/
+    function removeClassName(obj,className2)
+    {
+        if(obj.className!="")
+        {
+            var string = obj.className;  //获取到类名
+            var arr = string.split(" ");  //切割成数组
+            var arrnew = [] ;  //新的数组用来存储
+            for(var i=0;i<arr.length;i++)
+            {
+                if(arr[i] != className2)
+                {
+                    arrnew.push(arr[i]);
+                }
+            }
+            obj.className = arrnew.join(" ");
+
+        }
+    }
+    /*移除class类名方法*/
+</script>
+</html>

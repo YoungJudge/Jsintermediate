@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标滚动插件版本</title>
+</head>
+<body>
+<style>
+    #div1 {width: 100px; height: 100px; background: red;}
+    body{height:2000px;}
+</style>
+<div id="div1"></div>
+<script>
+    /*
+     鼠标滚轮事件
+     */
+    mousewheel(document.getElementById("div1"),function(){console.log("向下滚")},function(){console.log("向上滚")});
+    function mousewheel(obj,downfn,upfn)
+    {
+        obj.onmousewheel = fn;
+        if (obj.addEventListener) {
+            obj.addEventListener('DOMMouseScroll', fn, false);
+        }
+        function fn(ev) {
+            var ev = ev || event;
+            var b = true;
+            if (ev.wheelDelta) {
+                b = ev.wheelDelta > 0 ? true : false;
+            } else {
+                b = ev.detail < 0 ? true : false;
+            }
+            if(b) {
+                upfn&&upfn();
+            } else {
+                downfn&&downfn();
+            }
+            if (ev.preventDefault) {
+                ev.preventDefault();
+            }
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

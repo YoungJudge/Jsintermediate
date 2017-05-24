@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JS绘图</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    #huitu{width:700px;height:500px;position:absolute;left:50%;top:50%;margin-left:-350px;margin-top:-250px;border:1px solid #ccc;}
+    #huitu div{position:absolute;left:0px;top:0px;}
+    p{position:absolute;left:50%;top:50%;margin-left:-75px;margin-top:280px;text-align:center;}
+</style>
+<body>
+<div id="huitu">
+
+</div>
+<p>请在方框内绘制图形</p>
+</body>
+<script>
+    /*
+     很多时候，窗口或控件在鼠标按下后，需要知道鼠标移动和放开的情况，例如按钮在鼠标按下后会变为“按下”状态，鼠标移出按钮区域时“弹起”，所以按钮控件需要在鼠标按下时SetCapture，鼠标放开后ReleaseCapture。
+     GetCapture只是检查一下当前是哪个窗口捕获了鼠标，通常不需要调用
+     */
+    var div1 = document.getElementById("huitu");
+    huitu(div1);
+    function huitu(obj){
+       div1.onmousedown = function(e){
+            e = e ||event;
+           if(obj.setCapture){
+               obj.setCapture();
+           }
+           var firstx = e.clientX-obj.offsetLeft;   //获取到横坐标
+           var firsty = e.clientY-obj.offsetTop;   //获取到纵坐标
+           var div = document.createElement("div");   //创建节点
+           obj.appendChild(div);  //插入节点
+           obj.onmousemove = function(e){
+               e = e ||event;
+               var width = e.clientX-obj.offsetLeft;
+               var height = e.clientY-obj.offsetTop;
+               if(width<=0){width=0}
+               if(width>=obj.clientWidth){width = obj.clientWidth;}
+               if(height<=0){height=0}
+               if(height>=obj.clientHeight){height = obj.clientHeight;}
+               div.style.cssText = 'border: 1px solid green;';
+               div.style["left"] = firstx>width?width+"px":firstx+"px";
+               div.style["top"] = firsty>height?height+"px":firsty+"px";
+               div.style["width"] = Math.abs(Math.abs(firstx-width)-2)+"px";
+               div.style["height"] = Math.abs(Math.abs(firsty-height)-2)+"px";
+           }
+           obj.onmouseup = function(){
+               obj.onmousemove = null;
+               if(obj.releaseCapture){
+                   obj.releaseCapture();
+               }
+           }
+       }
+    }
+</script>
+</html>

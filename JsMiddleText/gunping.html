@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自己写的纯JS滚屏</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    body{overflow: hidden;}
+    #content div{text-align:center;line-height:500px;font-size:40px;color:white;}
+    #content{position:absolute;left:0px;top:0px;}
+    #content div:nth-child(1){background:red;}
+    #content div:nth-child(2){background:yellow;}
+    #content div:nth-child(3){background:green;}
+    #content div:nth-child(4){background:pink;}
+    #content div:nth-child(5){background:brown;}
+</style>
+<body>
+<div id="content">
+    <div>鼠标滚轮滚动屏幕就有惊喜</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+</div>
+</body>
+<script>
+ gunping(document.getElementById("content"));
+    function gunping(obj){
+        //第一步初始化
+        var width = document.documentElement.clientWidth||document.body.clientWidth;   //获取到宽度
+        var height = document.documentElement.clientHeight||document.body.clientHeight;   //获取到高度
+        var length = obj.children.length;  //获取到个数
+        //设置每个DIV的宽度和高度
+        for(var i=0;i<length;i++)
+        {
+            obj.children[i].style["width"] = width+"px";
+            obj.children[i].style["height"] = height+"px";
+        }
+        //写好运动函数
+        function getStyle(obj,attr){
+            return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+        }
+        function move(obj,attr,step,target,endfn)
+        {
+           step = target>parseInt(getStyle(obj,attr))?step:-step;
+            clearInterval(obj.move);
+            obj.move = setInterval(function(){
+                var speed = parseInt(getStyle(obj,attr))+step;
+                if(speed>target&&step>0||speed<target&&step<0)
+                {
+                    speed = target;
+                }
+                obj.style[attr] = speed+"px";
+                if(speed ==target)
+                {
+                    clearInterval(obj.move);
+                    endfn&&endfn();
+                }
+            },100)
+        }
+        //运动函数结束
+        //mousewheel滚动插件
+
+        function mousewheel(obj,downfn,upfn)
+        {
+
+                obj.onmousewheel = fn;
+                if (obj.addEventListener) {
+                    obj.addEventListener('DOMMouseScroll', fn, false);
+                }
+            function fn(ev) {
+                    var ev = ev || event;
+                    var b = true;
+                    if (ev.wheelDelta) {
+                        b = ev.wheelDelta > 0 ? true : false;
+                    } else {
+                        b = ev.detail < 0 ? true : false;
+                    }
+                    if(b) {
+                        upfn&&upfn();
+
+                    } else {
+                        downfn&&downfn();
+                    }
+                    if (ev.preventDefault) {
+                        ev.preventDefault();
+                    }
+                    return false;
+
+            }
+        }
+        //mousewheel滚动插件结束
+        var Pindex = 0 ;
+        var flag = true;
+        function moveDown(){
+             if(flag)
+             {
+                 flag = false;
+                 ++Pindex;
+                 if(Pindex==length)
+                 {
+                     Pindex = length-1 ;
+                     flag = true;
+                     window.alert("最后一屏幕");
+                     return;
+                 }
+                 move(document.getElementById("content"),"top",500,-Pindex*height,function(){
+                     flag = true;
+                 });
+
+             }
+        }
+        function moveUp(){
+            if(flag)
+            {
+                flag = false;
+                --Pindex;
+                if(Pindex==-1)
+                {
+                    window.alert("这个是第一屏幕");
+                    Pindex=0;
+                    flag = true;
+                    return;
+                }
+                move(document.getElementById("content"),"top",500,-Pindex*height,function(){flag = true;});
+            }
+
+        }
+        mousewheel(document,moveDown,moveUp);
+
+
+ }
+</script>
+</html>

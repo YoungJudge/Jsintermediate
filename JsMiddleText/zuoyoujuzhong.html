@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>左右居中</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    body{height:4000px;}
+    .left{width:40px;height:150px;position:absolute;left:0px;top:50%;margin-top:-75px;background:red;}
+    .right{width:40px;height:150px;position:absolute;right:0px;top:50%;margin-top:-75px;background:red;}
+</style>
+<body>
+<div id="left" class="left"></div>
+<div id="right" class="right"></div>
+</body>
+<script>
+  function pos(obj1,obj2)
+  {
+      window.onscroll = function(){atmiddle(obj1,obj2)};
+      window.onresize = function(){atmiddle(obj1,obj2)};
+  }
+  function atmiddle(obj1,obj2){
+      var height2 = obj1.offsetHeight;
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      var pingmuheight = document.documentElement.clientHeight/2;  //这里只能是可见区域而不能是body
+      obj1.style["top"] = (pingmuheight +scrollTop-height2/2)+"px";
+      obj2.style["top"] = (pingmuheight +scrollTop-height2/2)+"px";
+  }
+  pos(document.getElementById("left"),document.getElementById("right"));
+</script>
+</html>

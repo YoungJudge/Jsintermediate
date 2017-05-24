@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>图片放大和缩小</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    #div1{width:200px;height:200px;border:1px solid #ccc;position:absolute;left:50%;top:50%;margin-left:-100px;margin-top:-100px;overflow: hidden;}
+    #div1 img{width:100%;height:100%;position:absolute;left:0px;top:0px;}
+</style>
+<body>
+<div id="div1">
+<img src="images/2.jpg">
+</div>
+</body>
+<script>
+     scale(document.getElementById("div1"));
+    function scale(obj)
+    {
+        function getStyle(obj,attr)
+        {
+            return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+        }
+        var width = parseInt(getStyle(obj,"width"));
+        var height = parseInt(getStyle(obj,"height"));
+        function domove(obj,attr,step,target,endfn)
+        {
+            clearInterval(timer);
+
+            step =  target>parseInt(getStyle(obj,attr))? step:-step;
+            var timer = setInterval(function(){
+                var dis = parseInt(getStyle(obj,attr))+step;
+
+                if(dis>=target&&step>0||dis<target&&step<0)
+                {
+                    dis = target;
+                }
+                obj.style[attr] = dis+"px";
+                if(dis==target)
+                {
+                    clearInterval(timer);
+                    endfn&&endfn();
+                }
+            },100)
+        }
+       obj.onmouseover = function(){
+           domove(obj.children[0],"width",20,width*1.5);
+           domove(obj.children[0],"left",10,-width*0.5/2);
+           domove(obj.children[0],"height",20,height*1.5);
+           domove(obj.children[0],"top",10,-height*0.5/2);
+       }
+       obj.onmouseleave = function(){
+           domove(obj.children[0],"width",20,width);
+           domove(obj.children[0],"left",10,0);
+           domove(obj.children[0],"height",20,height);
+           domove(obj.children[0],"top",10,0);
+       }
+    }
+
+</script>
+</html>

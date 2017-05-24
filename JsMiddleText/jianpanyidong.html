@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>键盘移动</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    #div1{width:50px;height:50px;background: red;position:absolute;left:0px;top:0px;}
+    p{position:absolute;left:50px;top:0px;}
+</style>
+<body>
+<P>
+    点击键盘上上下左右按键就能移动
+</P>
+<div id="div1">
+
+</div>
+</body>
+<script>
+    /*思路
+    1.第一步判断keycode值要是单纯判断的话他没有办法斜着走
+    2.所以拿出来利用定时器来监听。这样要是按下双个键位他也能走。
+    3.利用keycode判断的是里面的true还是false
+     */
+    var key = {l:null,t:null,r:null,d:null};
+    setInterval(function(){
+        if(key.l)
+        {
+            if(document.getElementById("div1").offsetLeft==0)
+            {
+                document.getElementById("div1").style["left"] = "0px";
+            }else
+            {
+                document.getElementById("div1").style["left"] = (document.getElementById("div1").offsetLeft - 20) +"px";
+            }
+
+        }
+        if(key.t)
+        {
+            if(document.getElementById("div1").offsetTop==0)
+            {
+                document.getElementById("div1").style["top"] = "0px";
+            }else
+            {
+                document.getElementById("div1").style["top"] = (document.getElementById("div1").offsetTop-20) +"px";
+            }
+
+        }
+        if(key.r)
+        {
+
+            document.getElementById("div1").style["left"] = (document.getElementById("div1").offsetLeft+20) +"px";
+        }
+        if(key.d)
+        {
+            document.getElementById("div1").style["top"] = (document.getElementById("div1").offsetTop + 20) +"px";
+        }
+    },50)
+document.onkeydown = function(e){
+    var value = e.keyCode;
+    switch(value)
+    {
+        case 37:
+                      key.l = true;
+                     break;
+        case 38:
+            key.t = true;
+            break;
+        case 39:
+            key.r = true;
+            break;
+        case 40:
+            key.d = true;
+            break;
+    }
+}
+document.onkeyup = function(e){
+    var value = e.keyCode;
+    switch(value)
+    {
+        case 37:
+            key.l = false;
+            break;
+        case 38:
+            key.t = false;
+            break;
+        case 39:
+            key.r = false;
+            break;
+        case 40:
+            key.d = false;
+            break;
+    }
+}
+</script>
+</html>

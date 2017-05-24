@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>留言板</title>
+</head>
+<body>
+<p>最多输入5条，排列由上到下，到了第5个最下面的消失。主要测试插入节点。删除节点。</p>
+<input id="text1" type="text" value=""><input id="btn1" type="button" value="留言">
+<ul id="content">
+
+</ul>
+</body>
+<script>
+    document.getElementById("btn1").onclick = function(){
+        var value = document.getElementById("text1").value;
+        var result = value.trim();
+         if(!result)
+         {
+            window.alert("请输入文字");
+         }else
+         {
+             var ContentUl = document.getElementById("content");
+             var li = document.createElement("li");
+             li.innerHTML = value;
+             if(ContentUl.children[0])
+             {
+                 ContentUl.insertBefore(li,ContentUl.children[0])
+             }else
+             {
+                 ContentUl.appendChild(li);
+             }
+             if(ContentUl.children.length>5)
+             {
+                 ContentUl.removeChild(ContentUl.children[5]);
+             }
+             document.getElementById("text1").value = null;
+         }
+    }
+</script>
+</html>

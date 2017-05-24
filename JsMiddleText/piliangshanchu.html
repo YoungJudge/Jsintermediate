@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>批量删除</title>
+</head>
+<body>
+<style>
+    #content li.on{background:yellow;}
+</style>
+<p>最多输入5条，排列由上到下，到了第5个最下面的消失。点击添加的li北京变黄色。在点击批量删除,所有的黄色li都消失 。(批量删除必须找各自的index赋值来解决。因为删除后节点位置和个数都变了)</p>
+<input id="text1" type="text" value=""><input id="btn1" type="button" value="留言"><input type="button" id="btn2" value="批量删除">
+<ul id="content">
+
+</ul>
+</body>
+<script>
+    var btn1 = document.getElementById("btn1");   //留言
+    var btn2 = document.getElementById("btn2");   //批量删除
+    var Text1 = document.getElementById("text1");  //获取到输入框
+    var ContentUl = document.getElementById("content");  //获取到内容框
+    btn1.onclick = function(){
+        var value = Text1.value;
+        var result = value.trim();
+        if(!result)
+        {
+            window.alert("不能是空哟");
+        }else
+        {
+            var li = document.createElement("li");
+            li.innerHTML = result;
+            if(ContentUl.children[0])
+            {
+                ContentUl.insertBefore(li,ContentUl.children[0]);
+            }else
+            {
+                ContentUl.appendChild(li);
+            }
+            if(ContentUl.children.length>5)
+            {
+                ContentUl.removeChild(ContentUl.children[5]);
+            }
+            Text1.value = " ";
+        }
+        /*改变颜色*/
+        for(var i=0;i<ContentUl.children.length;i++)
+        {
+            ContentUl.children[i].index = i ;
+            ContentUl.children[i].onclick = function(){
+                this.className = "on";
+            }
+        }
+        /*改变颜色结束*/
+        /*批量删除开始*/
+        btn2.onclick = function(){
+            var arr = [];
+            for(var i=0;i<ContentUl.children.length;i++)
+            {
+
+                if(ContentUl.children[i].className=="on")
+                {
+                    arr.push(i);
+                }
+            }
+            for(var m=0;m<arr.length;m++)
+            {
+                for(var n=0;n<ContentUl.children.length;n++)
+                {
+                    if(ContentUl.children[n].index ==arr[m])
+                    {
+                        ContentUl.removeChild(ContentUl.children[n]);
+                    }
+                }
+            }
+        }
+
+        /*批量删除结束*/
+    }
+
+
+
+
+
+</script>
+</html>

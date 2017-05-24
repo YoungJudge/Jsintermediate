@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>选择筛选</title>
+</head>
+<style>
+
+    dd {
+        cursor: pointer;
+    }
+</style>
+<body>
+<dl>
+    <dt>地区</dt>
+    <dd>东城</dd>
+    <dd>西城</dd>
+    <dd>朝阳</dd>
+    <dd>昌平</dd>
+</dl>
+<dl>
+    <dt>职位</dt>
+    <dd>美工设计</dd>
+    <dd>前端工程师</dd>
+    <dd>后台开发</dd>
+</dl>
+<dl>
+    <dt>薪资</dt>
+    <dd>4000</dd>
+    <dd>5000</dd>
+    <dd>6000</dd>
+</dl>
+<div id="div1"></div>
+</body>
+<script>
+    window.onload = function(){
+
+        var aDL = document.getElementsByTagName('dl'),
+                oDiv = document.getElementById('div1'),
+                location = '',
+                position = '',
+                salary = '';
+
+        function fn(n){
+
+            var aDD = aDL[n].getElementsByTagName('dd');
+            for(var i=0; i<aDD.length; i++){
+                aDD[i].onclick = function(){
+                    switch(n){
+                        case 0:
+                            location = this.innerHTML + ' ';
+                            break;
+                        case 1:
+                            position = this.innerHTML + ' ';
+                            break;
+                        case 2:
+                            salary = this.innerHTML + ' ';
+                            break;
+                    }
+
+                    oDiv.innerHTML = location + position + salary;
+                }
+            }
+
+        }
+
+        for(var i=0; i<aDL.length; i++){
+            fn(i);
+        }
+
+
+    }
+</script>
+</html>

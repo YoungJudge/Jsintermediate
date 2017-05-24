@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>拖拽回放</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    #div1{width:100px;height:100px;background:red;position:absolute;left:0px;top:30px;}
+</style>
+<body>
+<button id="btn1">回放</button>
+<div id="div1">
+
+</div>
+</body>
+<script>
+    var button1 = document.getElementById("btn1");
+ var div1 = document.getElementById("div1");
+ var arrL = [] ;  //横坐标合集
+ var arrT = [];   //纵坐标合集
+    div1.onmousedown = function(e) {
+        e = e || event;
+        /*解决卡顿问题 */
+        if(div1.setCapture){
+            div1.setCapture();
+        }
+        /*解决卡顿问题结束*/
+        var L1 = e.clientX - div1.offsetLeft;
+        var T1 = e.clientY - div1.offsetTop;
+        div1.onmousemove = function (e) {
+            e = e || event;
+            var L2 = e.clientX - L1;
+            var T2 = e.clientY - T1;
+            if (T2 < 0) {
+                T2 = 0;
+            } else if (T2 > document.documentElement.clientHeight - div1.offsetHeight) {
+                T2 = document.documentElement.clientHeight - div1.offsetHeight;
+            }
+            if (L2 < 0) {
+                L2 = 0;
+            } else if (L2 > document.documentElement.clientWidth - div1.offsetWidth) {
+                L2 = document.documentElement.clientWidth - div1.offsetWidth;
+            }
+            arrL.push(L2);
+            arrT.push(T2);
+            div1.style["left"] = L2+"px";
+            div1.style["top"] = T2+"px";
+        }
+        div1.onmouseup = function(){
+            if(div1.releaseCapture){
+                div1.releaseCapture();
+            }
+            div1.onmousemove = null;
+        }
+    }
+    button1.onclick = function(){
+          arrL.push(0);  //增加初始X位置
+          arrT.push(30); //增加初始Y位置
+          var index = arrL.length;
+          var timer = setInterval(function(){
+              if(index==0)
+              {
+                  clearInterval(timer);
+                  arrL = [];
+                  arrT = [];
+              }
+             --index;
+              div1.style["left"] = arrL[index] +"px";
+              div1.style["top"] = arrT[index] +"px";
+          },20)
+    }
+</script>
+</html>

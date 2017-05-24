@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv='Content-Type' content="text/html; charset=utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <title>仿造百度下拉</title>
+    <script src="js/ajaxbaidu.js"></script>
+</head>
+<style>
+    #btn {width: 300px; height: 30px; padding: 5px; border:1px solid #f90; font-size: 16px;}
+    #ul1 {border:1px solid #f90; width: 310px; margin: 0;padding: 0; display: none;}
+    li a { line-height: 30px; padding: 5px; text-decoration: none; color: black; display: block;}
+    li a:hover{ background: #f90; color: white; }
+</style>
+<body>
+<input type="text" id="btn" />
+<ul id="ul1"></ul>
+</body>
+<script>
+    var btnId = document.getElementById("btn");  //获取到button
+    var ul1 = document.getElementById("ul1");  //获取到ul1
+    btnId.onkeyup = function(){
+        ajax({
+            type:"get",
+            url: "http://suggestion.baidu.com/su?wd="+this.value,
+            dataType:"jsonp",
+            success:function(data){
+                var dataall = data.s;
+                var html = "";
+                if(dataall.length)
+                {
+                   for(var i=0;i<dataall.length;i++)
+                   {
+                       html += '<li><a href="#">'+dataall[i]+'</a></li>';
+                   }
+                   ul1.style["display"] = "block";
+                    ul1.innerHTML = html;
+                }else
+                {
+                    ul1.style["display"] = "none";
+                }
+            }
+        })
+
+    }
+</script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滚动条的模拟</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    #div1{width:30px;height:400px;background:#94BDD6;position:absolute;left:20px;top:20px;}
+    #div2{width:30px;height:30px;background:cadetblue;position:absolute;left:0px;top:0px;}
+    #content{width:300px;height:400px;position:absolute;left:60px;top:20px;border:1px solid #ccc;overflow:hidden;}
+    #content1{position:absolute;left:0px;top:0px;}
+</style>
+<body>
+<!--滚动条-->
+<div id="div1">
+  <div id="div2"></div>
+</div>
+<!--滚动条结束-->
+<!--右边内容-->
+<div id="content">
+    <div id="content1">
+    于欢故意伤害一案，最高人民检察院于26日权威发布称“已派员赴山东阅卷并听取山东省检察机关汇报，正在对案件事实、证据进行全面审查。
+    对于欢的行为是属于正当防卫、防卫过当还是故意伤害，将依法予以审查认定……”
+    这是一个让很多网民为之一振的消息，因为于欢已经提起上诉，案件将进入二审阶段，最高检的介入对于案件最终得到公正处理无疑有着积极的作用。
+    随后，山东省高级人民法院也宣布已经受理该案二审，将会依法处理。于是有人由此提出了一个疑问：为什么最高人民检察院宣布介入，但最高人民法院却“无动于衷”？
+    只出来个山东省高级人民法院来告知一下程序节点？
+    于欢故意伤害一案，最高人民检察院于26日权威发布称“已派员赴山东阅卷并听取山东省检察机关汇报，正在对案件事实、证据进行全面审查。
+    对于欢的行为是属于正当防卫、防卫过当还是故意伤害，将依法予以审查认定……”
+    这是一个让很多网民为之一振的消息，因为于欢已经提起上诉，案件将进入二审阶段，最高检的介入对于案件最终得到公正处理无疑有着积极的作用。
+    随后，山东省高级人民法院也宣布已经受理该案二审，将会依法处理。于是有人由此提出了一个疑问：为什么最高人民检察院宣布介入，但最高人民法院却“无动于衷”？
+    只出来个山东省高级人民法院来告知一下程序节点？
+    于欢故意伤害一案，最高人民检察院于26日权威发布称“已派员赴山东阅卷并听取山东省检察机关汇报，正在对案件事实、证据进行全面审查。
+    对于欢的行为是属于正当防卫、防卫过当还是故意伤害，将依法予以审查认定……”
+    这是一个让很多网民为之一振的消息，因为于欢已经提起上诉，案件将进入二审阶段，最高检的介入对于案件最终得到公正处理无疑有着积极的作用。
+    随后，山东省高级人民法院也宣布已经受理该案二审，将会依法处理。于是有人由此提出了一个疑问：为什么最高人民检察院宣布介入，但最高人民法院却“无动于衷”？
+    只出来个山东省高级人民法院来告知一下程序节点？
+    </div>
+</div>
+
+<!--右边内容结束-->
+</body>
+<script>
+    drag(document.getElementById("div2"),document.getElementById("div1"),document.getElementById("content"),document.getElementById("content1"))
+    function drag(obj,objall,objcontent,objcontent1)
+    {
+       obj.onmousedown = function(e){
+           e = e || event;   //为了兼容性
+           var firstY = e.clientY;  //获取到点击的纵坐标
+           var height = obj.offsetHeight;  //获取到高度
+           var Top = obj.offsetTop;  //获取到距离的高度
+           var disy = firstY-Top;
+           document.onmousemove = function(e){
+               e = e ||event;
+               var T = e.clientY-disy;
+               if(T<0)
+               {
+                   T=0;
+               }else if(T>objall.offsetHeight-30)
+               {
+                   T = objall.offsetHeight-30;
+               }
+               obj.style["top"] = T+"px";
+               var overHeight = objcontent1.offsetHeight - objcontent.offsetHeight;
+               var percent = T/(objall.offsetHeight-30);
+               var topcontent = percent*overHeight;   //获取到高度
+               objcontent1.style["top"] = -topcontent+"px";
+
+           }
+           document.onmouseup = function(){
+               document.onmousemove = null;
+           }
+       }
+    }
+</script>
+</html>

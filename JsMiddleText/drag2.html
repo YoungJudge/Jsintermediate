@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽原理测试第二次</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    .box{width:300px;height:300px;background:blue;position:absolute;left:50%;top:50%;margin-left:-150px;margin-top:-150px;}
+    #div1{width:50px;height:50px;position:absolute;left:10px;top:30px;background:red;z-index:99;}
+    #div2{width:50px;height:50px;position:absolute;left:230px;top:220px;background:green;}
+</style>
+<body>
+<div class="box">
+    <div id="div1">
+        被拖动的元素
+    </div>
+    <div id="div2">
+        要拖动的位置
+    </div>
+</div>
+
+<script>
+    drag(document.getElementById("div1"),document.getElementById("div2"),document.getElementsByClassName("box")[0]);
+    function drag(obj,obj2,Box)
+    {
+        function getStyle(obj,attr)
+        {
+            return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+        }
+        obj.onmousedown = function(e){
+              e = e||event;
+            /*解决卡顿问题 */
+            if(obj.setCapture){
+                obj.setCapture();
+            }
+            /*解决卡顿问题结束*/
+             var disx = e.clientX-obj.offsetLeft;  //获取的就是除去这个元素这个距离左边的距离offsetLeft找的就是有定位的父元素
+             var disy = e.clientY-obj.offsetTop;  //获取的就是除去这个元素这个距离上边的距离offsetTop找的就是有定位的父元素
+            obj.onmousemove = function(e){
+                  e = e||event;
+                var L = e.clientX-disx;   //获取的是移动过程中到左边的距离
+                var T = e.clientY-disy;   //获取的就是移动过程中到上边的距离
+                if(L<0)  //当距离左边的距离要是小于0表示左边出去了
+                {
+                    L=0;   //拉回来
+                }else if(L>parseInt(getStyle(Box,"width"))-parseInt(getStyle(obj,"width")))   //表示右边出去了
+                {
+                    L = parseInt(getStyle(Box,"width"))-parseInt(getStyle(obj,"width"));   //拉回来
+                }
+                if(T<0)  //表示上边出去了，小于
+                {
+                    T =0 ;   //拉回来
+                }else if(T>parseInt(getStyle(Box,"height"))-parseInt(getStyle(obj,"height")))   //表示下边出去了
+                {
+                    T = parseInt(getStyle(Box,"height"))-parseInt(getStyle(obj,"height"))
+                }
+                if(L==obj2.offsetLeft&&T==obj2.offsetTop)   //表示正好遇上那个DIV
+                {
+                    window.alert("拼图完成了");
+                    obj.onmousemove = null;
+                    obj.onmousedown = null;   //取笑道鼠标移动事件
+                    return
+                }
+                obj.style["left"] = L+"px";   //赋值
+                obj.style["top"] = T+"px";    //赋值结束
+            }
+            return false;  //清除默认事件
+        }
+      obj.onmouseup = function(){
+            obj.onmousemove = null;
+            obj.onmousedown=null;   //取笑道鼠标移动事件
+            if(obj.releaseCapture){
+                obj.releaseCapture();
+            }
+        }
+
+    }
+</script>
+</body>
+</html>

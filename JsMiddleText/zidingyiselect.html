@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>自定义select</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    ul{list-style-type:none;}
+    li{float:left;}
+    a{text-decoration: none;}
+    .checkbox{width:100px;height:50px;border:2px solid red;position:absolute;left:50%;top:50%;margin-left:-50px;margin-top:-25px;text-align:center;z-index:999;background:yellow;}
+    .checkbox>a{wiidth:100px;height:50px;line-height:50px;}
+     #ul1{position:absolute;top:50px;left:0px;width: 100px;display: none;}
+    #ul1 li{height:30px;width:100px;text-align:center;line-height:30px;z-index:1;}
+    #ul1 li a{z-index:1;}
+</style>
+<body>
+<div id="div1"class="checkbox"><a href="http://www.baidu.com" target="_blank">百度</a>
+    <ul id="ul1">
+        <li>百度</li>
+        <li>优酷</li>
+        <li>网易</li>
+        <li>搜狐</li>
+        <li>新浪</li>
+        <li>腾讯</li>
+    </ul>
+</div>
+</body>
+<script>
+ var div1 = document.getElementById("div1");
+ var ul1 = document.getElementById("ul1");
+    div1.onclick = function(){
+        ul1.style["display"] = "block";
+    }
+    for(var i=0;i<ul1.getElementsByTagName("li").length;i++)
+    {
+        ul1.getElementsByTagName("li").index = i;
+        ul1.getElementsByTagName("li")[i].onclick = function(e){
+            e.cancelBubble = true;
+            var value = this.innerHTML;
+            div1.children[0].innerHTML = value;
+            ul1.style["display"] = "none";
+
+        }
+
+    }
+</script>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS中级所有效果合集</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;font-family: "Microsoft YaHei";}
+    ul{list-style-type: none;}
+    li{float:left;}
+    a{text-decoration: none;color:white;}
+    .nav{width:300px;height:auto;position:absolute;left:50%;top:50px;margin-left:-100px;}
+    .nav div {width:300px;line-height:50px;background:black;color:white;border-bottom:1px solid white;}
+    .nav div label{width:50px;height:50px;display:block;float:left;}
+    .nav div span{width:300px;line-height:50px;display:block;text-indent:15px;cursor:pointer;}
+    .nav div ul a{width:300px;line-height:50px;text-align:center;display:block;color:black;}
+    .nav div ul {display:none;overflow: hidden;background: white;}
+    .nav div ul li{border-bottom:2px solid #ccc;}
+</style>
+<body>
+<div class="nav" id="nav">
+    <div>
+        <span><label>+</label>0.DOM基本概念和操作</span>
+        <ul>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/liuyanban.html"target="_blank">留言板加强</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/piliangshanchu.html"target="_blank">批量删除</a></li>
+        </ul>
+    </div>
+    <div>
+        <span><label>+</label>1.DOM,BOM相关方法和属性</span>
+        <ul>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/JSON.html"target="_blank">利用JSON包创建节点</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/huidaodingbu.html"target="_blank">利用scrollTop回到顶部</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/guangjianzitishi.html"target="_blank">关键字提示</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/xuanzeshaixuan.html"target="_blank">选择筛选</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/zuoyoujuzhong.html"target="_blank">左右居中</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/zhezhaoceng.html"target="_blank">遮罩层</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/gunping.html"target="_blank">移动端滚屏</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/wufenggundong.html"target="_blank">无缝滚动</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/scale.html"target="_blank">放大和缩小</a></li>
+        </ul>
+    </div>
+    <div>
+        <span><label>+</label>2.EVENT事件详解</span>
+        <ul>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/jianpanyidong.html"target="_blank">键盘移动</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/zidingyiselect.html"target="_blank">自定义select</a></li>
+        </ul>
+    </div>
+    <div>
+        <span><label>+</label>3.事件深入</span>
+        <ul>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/gundongtiao.html"target="_blank">模拟滚动条</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/JShuitu.html"target="_blank">JS绘图</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/huifang.html"target="_blank">拖拽回放</a></li>
+            <li><a href="https://youngjudge.github.io/JSMiddle/JsMiddleText/drag2.html"target="_blank">拖拽重合</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+<script>
+    var length = document.getElementById("nav").getElementsByTagName("div").length;
+    for(var i=0;i<length;i++)
+    {
+        document.getElementById("nav").getElementsByTagName("div")[i].index = i ;
+        document.getElementById("nav").getElementsByTagName("div")[i].getElementsByTagName("span")[0].onclick = function(){
+            if(this.parentNode.getElementsByTagName("ul")[0].style["display"]=="block")
+            {
+                this.parentNode.getElementsByTagName("ul")[0].style["display"]="none";
+                this.getElementsByTagName("label")[0].innerHTML="+";
+            }else
+            {
+                for(var i=0;i<length;i++)
+                {
+                    document.getElementById("nav").getElementsByTagName("ul")[i].style["display"] = "none";
+                    document.getElementById("nav").getElementsByTagName("label")[i].innerHTML="+";
+                }
+                this.getElementsByTagName("label")[0].innerHTML = "-";
+                this.parentNode.getElementsByTagName("ul")[0].style["display"] = "block";
+
+            }
+        }
+    }
+</script>
+</html>

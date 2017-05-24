@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>控制DIV移动</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    #div1{width:300px;height:300px;background:red;position:absolute;left:0px;top:0px;}
+</style>
+<body>
+<div id="div1">
+    方框漂流记
+</div>
+</body>
+<script>
+
+    function getStyle(obj,attr)
+    {
+        return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+    }
+    document.onkeydown = function(e){
+       switch(e.keyCode)
+       {
+           case 37:
+               if(parseInt(getStyle(document.getElementById("div1"),"left"))==0)
+               {
+                   window.alert("到头了，不能动了");
+               }else
+               {
+                   document.getElementById("div1").style["left"] = (parseInt(getStyle(document.getElementById("div1"),"left"))-10)+"px";
+               }
+               break;
+           case 38:
+               if(parseInt(getStyle(document.getElementById("div1"),"top"))==0)
+               {
+                   window.alert("到头了，不能动了");
+               }else
+               {
+                   document.getElementById("div1").style["top"] = (parseInt(getStyle(document.getElementById("div1"),"top"))-10)+"px";
+               }
+               break;
+           case 39:
+               if(parseInt(getStyle(document.getElementById("div1"),"left"))>=(parseInt(document.documentElement.clientWidth)-300))
+               {
+                   window.alert("到头了，不能动了");
+               }else
+               {
+                   document.getElementById("div1").style["left"] = (parseInt(getStyle(document.getElementById("div1"),"left"))+10)+"px";
+               }
+               break;
+           case 40:
+               if(parseInt(getStyle(document.getElementById("div1"),"top"))>=(parseInt(document.documentElement.clientHeight)-300))
+               {
+                   window.alert("到头了，不能动了");
+               }else
+               {
+                   document.getElementById("div1").style["top"] = (parseInt(getStyle(document.getElementById("div1"),"top"))+10)+"px";
+               }
+               break;
+       }
+    }
+
+</script>
+</html>

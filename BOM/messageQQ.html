@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟短信调用</title>
+</head>
+<body>
+<style>
+    *{margin:0px;padding:0px;}
+    .container{width:1000px;height:700px;border:1px solid #ccc;border-radius: 10px;box-shadow: 5px 2px 10px #ccc;position:absolute;left:50%;top:50%;transform: translate(-50%,-50%);}
+    #bottom{width:100%;height:100px;position:absolute;bottom:0px;left:0px;}
+    #button1{width:20%;height:100px;text-align:center;line-height:99px;font-size:30px;position:absolute;left:0px;top:0px;}
+    #text1{width:60%;height:99px;line-height:99px;position:absolute;left:20%;top:0px;font-size:55px;}
+    #send{width:20%;height:100px;text-align:center;line-height:100px;font-size:30px;position:absolute;left:80%;top:0px;}
+    #main{width:100%;height:600px;list-style-type: none;overflow: auto;}
+</style>
+<body>
+
+<div class="container">
+    <!--顶部区域-->
+    <ul id="main">
+
+
+
+    </ul>
+
+
+    <!--顶部区域-->
+    <!--底部开始-->
+    <div id="bottom">
+        <button id="button1">我说:</button>
+        <input type="text" id="text1">
+        <button id="send">发送</button>
+    </div>
+    <!--底部开始-->
+
+</div>
+
+</body>
+<script>
+    //第一步获取数据
+    var button1 = document.getElementById("button1");  //获取到我说，他说的按钮
+    var sendButton = document.getElementById("send");  //获取到发送按钮
+    var main = document.getElementById("main");  //获取到中间区域
+    var textinput = document.getElementById("text1");  //获取到输入框
+    //获取参数结束
+    //初始化开始
+    var flag = true;  //true就是我说
+    var countNum = 0 ;   //计数器
+    //初始化结束
+    //先死后活法则
+    //点击方法开始
+    button1.onclick  = function(){
+        countNum++;
+        if(countNum%2==0)
+        {
+            this.innerHTML = "我说";
+            flag = true;
+        }else
+        {
+            this.innerHTML = "他说";
+            flag = false;
+        }
+    }
+    //点击方法结束
+    //然后判断是我说还是他说:
+    sendButton.onclick = function(){
+        hexin();
+    }
+    //按下ctrl+回车键开始
+    document.onkeydown = function(event)
+    {
+        var e = event||window.event; // 这里注意火狐是event而IE则是window.event;
+        if(e.ctrlKey&&e.keyCode==13)              //判断是不是回车
+        {
+            hexin();
+        }
+    }
+    function hexin(){
+        if(flag)         //真就是我说
+        {
+            var value = textinput.value;
+            var text = '<li style="float:right:line-height:120px;text-align:right;font-size:120px;">'+'我说:'+ value  +'</li>';
+            main.innerHTML += text ;
+            main.scrollTop = main.scrollHeight;  //这句话就是顶部超出后，超出的部分距离DIV最上方的高度,scrollHeight就是整个滚动条的高，这样，滚动条一直在下面。
+            textinput.value="";  //发送完就清空
+        }else                   //假就是他说:
+        {
+            var value = textinput.value;
+            var text = '<li style="float:left:line-height:120px;text-align:left;font-size:120px;">'+'他说:'+ value  +'</li>';
+            main.innerHTML += text;
+            main.scrollTop = main.scrollHeight;
+            textinput.value="";  //发送完就清空
+
+        }
+    }
+</script>
+</body>
+</html>

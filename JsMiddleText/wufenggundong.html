@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>无缝滚动</title>
+</head>
+<style>
+    *{margin:0px;padding:0px;}
+    #content{width:600px;height:240px;}
+    div{margin-right:100px;width:100px;height:240px;float:left;position:relative;}
+    ul{list-style-type: none;width:100px;height:240px;position:absolute;left:0px;top:0px;}
+    li{background:black;color:white;line-height:40px;width:100px;height:40px;text-align:center;}
+
+</style>
+<body>
+<div id="content">
+<div>
+<ul>
+    <li>11</li>
+    <li>12</li>
+    <li>13</li>
+    <li>14</li>
+    <li>15</li>
+    <li>16</li>
+</ul>
+</div>
+
+<div>
+<ul>
+    <li>21</li>
+    <li>22</li>
+    <li>23</li>
+    <li>24</li>
+    <li>25</li>
+    <li>26</li>
+</ul>
+</div>
+
+<div>
+<ul>
+    <li>31</li>
+    <li>32</li>
+    <li>33</li>
+    <li>34</li>
+    <li>35</li>
+    <li>36</li>
+</ul>
+</div>
+</div>
+</body>
+<script>
+    function getStyle(obj,attr)
+    {
+        return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+    }
+    function Imove(obj,attr,step,target,endfn)
+    {
+        //防止累加,越来越快。这样一上来我都从0开始计算
+        clearTimeout(obj.timer);
+        //主要是判断速度是正的还是负的，上来先比较。我的思路是要是目标的位置比初始的位置大，则速度肯定是正的，要是小则速度肯定是负的
+        step =  target>parseInt(getStyle(obj,attr))? step:-step;
+        obj.timer = setInterval(function(){
+            var dis = parseInt(getStyle(obj,attr))+step;   //获取到每次走了之后距离最开始的位置
+            //判断一下当走的距离要是超过了终点，则必须拉回来。要是没超过。则继续走.
+            if(dis>=target&&step>0||dis<target&&step<0)
+            {
+                dis = target;
+            }
+            obj.style[attr] = dis+"px";   //给这个对象赋值，让他自己慢慢走。
+            if(dis==target)               //当到达了终点了，就不让他走了。这个时候你需要清除定时器了。因为没用了。
+            {
+                clearInterval(obj.timer);   //清除定时器
+                endfn&&endfn();           //执行回调方法
+            }
+        },100)
+    }
+   function scroll (obj)
+   {
+       obj.move = setInterval(function(){
+       Imove( obj,"top",40,-40,function(){
+           obj.style["top"] = "0px";
+          obj.appendChild( obj.children[0]);
+       })
+   },1000)
+   }
+   function clear(obj)
+   {
+       clearInterval(obj.move);
+   }
+   for(var i=0;i<document.getElementById("content").getElementsByTagName("ul").length;i++)
+   {
+       scroll(document.getElementById("content").getElementsByTagName("ul")[i]);
+       document.getElementById("content").getElementsByTagName("ul")[i].index = i ;
+       document.getElementById("content").getElementsByTagName("ul")[i].onmouseleave= function(){
+           var index = this.index;
+           scroll(document.getElementById("content").getElementsByTagName("ul")[index]);
+       }
+       document.getElementById("content").getElementsByTagName("ul")[i].onmouseover= function(){
+           var index = this.index;
+           clear(document.getElementById("content").getElementsByTagName("ul")[index]);
+       }
+   }
+
+</script>
+
+</html>
